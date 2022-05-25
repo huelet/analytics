@@ -14,6 +14,7 @@ func main() {
 	if err != nil {
 		fmt.Println("Error loading .env file")
 	}
+	
 
 	app.Listen(fmt.Sprintf(":%s", os.Getenv("PORT")))
 }
