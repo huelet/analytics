@@ -3,14 +3,15 @@ package src
 import (
 	"os"
 
-	"github.com/fauna/faunadb-go/v4/faunadb"
+	"github.com/go-redis/redis/v8"
 )
 
-func ConnectDB() (*faunadb.FaunaClient, error) {
-	client := faunadb.NewFaunaClient(
-		os.Getenv("FAUNA_KEY"),
-		faunadb.Endpoint("https://db.fauna.com"),
-	)
+func ConnectDB() (*redis.Client, error) {
+	dbUrl, err := redis.ParseURL(os.Getenv("REDIS_URL"))
+	if err != nil {
+		return nil, err
+	}
+	db := redis.NewClient(dbUrl)
 
-	return client, nil
+	return db, nil
 }
